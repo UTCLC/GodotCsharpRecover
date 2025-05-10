@@ -146,11 +146,16 @@ def replace(csdir, projdir):
 				elif (dirfile.endswith(".csproj")):
 					with (open(projdir + "/project.godot", mode="r", encoding="utf-8") as f):
 						version = re.search('config\\/features=PackedStringArray\\("(.*)", "C#", "(.*)"\\)',f.read()).group(1)
-					contents = contents.replace("<Project Sdk=\"Microsoft.NET.Sdk\">","<Project Sdk=\"Godot.NET.Sdk/"+version+"\">").replace("\n    <LangVersion>1</LangVersion>","").replace("netcoreapp8.0",".net8.0")
+					contents = contents.replace("<Project Sdk=\"Microsoft.NET.Sdk\">","<Project Sdk=\"Godot.NET.Sdk/"+version+"\">").replace("netcoreapp8.0",".net8.0")
 					search = re.search("<TargetFramework>.*<\\/TargetFramework>",contents)
 					if (search):
 						result = search.group()
 						contents = contents.replace(result,"<TargetFramework>.net"+("8" if (int(version.split(".")[1])>=4 and int(version.split(".")[1])>=4) else "6")+".0</TargetFramework>")
+					write(projdir + "/" + dirfile, contents)
+					search = re.search("\n    <LangVersion>.*</LangVersion>",contents)
+					if (search):
+						result = search.group()
+						contents = contents.replace(result,"")
 					write(projdir + "/" + dirfile, contents)
 				else:
 					find(dirfile, projdir, contents)
