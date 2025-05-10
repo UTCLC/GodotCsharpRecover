@@ -151,7 +151,6 @@ def replace(csdir, projdir):
 					if (search):
 						result = search.group()
 						contents = contents.replace(result,"<TargetFramework>.net"+("8" if (int(version.split(".")[1])>=4 and int(version.split(".")[1])>=4) else "6")+".0</TargetFramework>")
-					write(projdir + "/" + dirfile, contents)
 					search = re.search("\n    <LangVersion>.*</LangVersion>",contents)
 					if (search):
 						result = search.group()
