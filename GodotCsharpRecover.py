@@ -162,7 +162,7 @@ def replace(csdir, projdir):
 			replace(path, projdir)
 
 def write(targetdir, contents):
-	if (os.path.exists(targetdir)):
+	if (targetdir.endswith(".csproj") or os.path.exists(targetdir)):
 		print(f"Write in {targetdir}")
 		with open(targetdir, mode="w", encoding="utf-8") as f:
 			f.write(contents)
